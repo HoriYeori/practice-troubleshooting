@@ -59,7 +59,7 @@ jobs:
         password: ${{ secrets.CICDACR_PASSWORD }}
     - run: |
         cd manifests/production
-        kustomize edit set image ${{ secrets.CICDACR_LOGIN_SERVER }}/${{ ENV.image_name }}:${{ steps.gen-version.outputs.VERSION }}
+        kustomize edit set image ${{ secrets.CICDACR_LOGIN_SERVER }}/${{ env.image_name }}:${{ steps.gen-version.outputs.VERSION }}
     - name: Commit files
       run: |
         git config --global user.email "github-actions@github.com"
