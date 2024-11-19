@@ -45,8 +45,8 @@ jobs:
       uses: azure/docker-login@v1
       with:
         login-server: ${{ secrets.BASEACR_LOGIN_SERVER }}
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
+        username: ${{ secrets.BASEACR_USERNAME }}
+        password: ${{ secrets.BASEACR_PASSWORD }}
     - name: Build & Tag image
       run: |
         docker build -t ${{ secrets.BASEACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }} .
@@ -54,9 +54,9 @@ jobs:
     - name: Push image
       uses: azure/docker-login@v1
       with:
-        login-server: ${{ secrets.BASEACR_LOGIN_SERVER }}
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
+        login-server: ${{ secrets.CICDACR_LOGIN_SERVER }}
+        username: ${{ secrets.CICDACR_USERNAME }}
+        password: ${{ secrets.CICDACR_PASSWORD }}
     - run: |
         cd manifests/production
         kustomize edit set image ${{ secrets.CICDACR_LOGIN_SERVER }}/${{ ENV.image_name }}:${{ steps.gen-version.outputs.VERSION }}
