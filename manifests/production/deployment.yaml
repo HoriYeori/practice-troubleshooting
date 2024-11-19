@@ -4,11 +4,20 @@ metadata:
   name: app-82265825
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: app-82265825
   template:
+    metadata:
+      labels:
+        app: app-82265825
     spec:
       containers:
       - name: app-82265825
-        command: ["java", "-jar", "/app.jar"]
+        # command: ["java", "-jar", "/app.jar"]
+        image: ceappacr.azurecr.io/app-82265825
+        ports:
+        - containerPort: 8080
         args: ["--spring.config.location=file:/config/application.yml"]
         volumeMounts:
         - mountPath: /config
