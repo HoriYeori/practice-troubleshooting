@@ -11,4 +11,4 @@ images:
 - name: ceappacr.azurecr.io/
   newTag: "202411191543"
 - name: ceappacr.azurecr.io/app-82265825
-  newTag: "202411191549"
+  newTag: "202411191607"
