@@ -14,3 +14,5 @@ namePrefix: prod-
 images:
 - name: ceappacr.azurecr.io/app-82265825
   newTag: "202411200033"
+- name: ceappacr.azurecr.io/troubleshooting
+  newTag: latest
