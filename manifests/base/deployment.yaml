@@ -1,39 +1,19 @@
-apiVersion: apps/v1
+apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: app-82265825
+  name: troubleshooting
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app-82265825
+      app: troubleshooting
   template:
     metadata:
       labels:
-        app: app-82265825
+        app: troubleshooting
     spec:
       containers:
-        - name: app-82265825
-          image: ceappacr.azurecr.io/app-82265825
+        - name: troubleshooting
+          image: cepgbaseacr.azurecr.io/troubleshooting:lastest
           ports:
           - containerPort: 8080
-          
-# apiVersion : apps/v1
-# kind: Deployment
-# metadata:
-#   name: cloud-sample 
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: cloud-sample
-#   template:
-#     metadata:
-#       labels:
-#         app: cloud-sample 
-#     spec:
-#       containers:
-#         - name: cloud-sample 
-#           image: cepgstapacr.azurecr.io/cloud-sample
-#           ports:
-#           - containerPort: 8080
