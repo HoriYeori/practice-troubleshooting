@@ -16,7 +16,7 @@ on: workflow_dispatch
 #     branches: [ "main" ]
 
 env:
-  IMAGE_NAME: app-82265825
+  IMAGE_NAME: troubleshooting
 
 jobs:
   build:
@@ -49,8 +49,7 @@ jobs:
         password: ${{ secrets.BASEACR_PASSWORD }}
     - name: Build & Tag image
       run: |
-        docker build -t ${{ secrets.BASEACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }} .
-        docker tag ${{ secrets.BASEACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }} ${{ secrets.CICDACR_LOGIN_SERVER}}/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }}
+        docker build -t ${{ secrets.BASEACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest .
     - name: Push image
       uses: azure/docker-login@v1
       with:
@@ -58,12 +57,12 @@ jobs:
         username: ${{ secrets.CICDACR_USERNAME }}
         password: ${{ secrets.CICDACR_PASSWORD }}
     - run: |
-        docker push ${{ secrets.CICDACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }}
+        docker push ${{ secrets.BASEACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
     - name: Update Kubernetes resources
       run: |
         # cd manifests/production
         cd manifests/overlays/prod
-        kustomize edit set image ${{ secrets.CICDACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }}
+        kustomize edit set image ${{ secrets.BASEACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
     - name: Commit files
       run: |
         git config --global user.email "github-actions@github.com"
